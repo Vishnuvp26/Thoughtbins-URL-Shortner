@@ -6,6 +6,7 @@ import {
     BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, Legend, CartesianGrid, Label
 } from "recharts";
+import TablePagination from "../pagination/Pagination";
 
 interface Analytics {
     shortCode: string;
@@ -32,10 +33,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return null;
 };
 
+const ITEMS_PER_PAGE = 5;
+
 const GeoData = () => {
     const [analytics, setAnalytics] = useState<Analytics[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         fetchAnalytics();
@@ -94,6 +98,18 @@ const GeoData = () => {
         ) : null;
     };
 
+    const paginatedData = () => {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        return analytics.slice(startIndex, endIndex);
+    };
+
+    const totalPages = Math.ceil(analytics.length / ITEMS_PER_PAGE);
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center h-[400px]">
@@ -112,7 +128,7 @@ const GeoData = () => {
 
     return (
         <div className="w-full p-4 sm:p-6">
-            <div className="container mx-auto bg-white bg-[radial-gradient(rgba(0,0,0,0.2)_0.8px,transparent_1px)] [background-size:20px_20px]">
+            <div className="container pt-6 mx-auto bg-white bg-[radial-gradient(rgba(0,0,0,0.2)_0.8px,transparent_1px)] [background-size:20px_20px]">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">Analytics Dashboard</h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -133,7 +149,7 @@ const GeoData = () => {
                                         height={60}
                                         tick={{ fontSize: 12 }}
                                     >
-                                        <Label value="Short URLs" position="bottom" offset={50} />
+                                        <Label value="Short URLs" position="bottom" offset={-0.5} className="-mb:3" />
                                     </XAxis>
                                     <YAxis tick={{ fontSize: 12 }}>
                                         <Label
@@ -201,11 +217,10 @@ const GeoData = () => {
                                         <th className="p-3 font-semibold w-1/4">Short URL</th>
                                         <th className="p-3 font-semibold w-2/4">Original URL</th>
                                         <th className="p-3 font-semibold w-1/4">Clicks</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {analytics.map((item) => (
+                                    {paginatedData().map((item) => (
                                         <tr
                                             key={item.shortCode}
                                             className="border-b hover:bg-gray-50 transition-colors"
@@ -219,6 +234,13 @@ const GeoData = () => {
                                     ))}
                                 </tbody>
                             </table>
+
+                            <TablePagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                                className="mt-4"
+                            />
                         </div>
                     </Card>
                 </div>

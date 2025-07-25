@@ -32,7 +32,7 @@ const Navbar = ({ title, navItems }: NavbarProps) => {
     return (
         <nav className="sticky top-0 z-50 w-full h-16 shadow-sm bg-white">
             <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between h-full">
-                <h1 className="text-xl font-semibold text-black">{title}</h1>
+                <h1 className="text-xl font-semibold text-black hover:cursor-pointer">{title}</h1>
 
                 <div className="relative space-x-4 h-full flex items-center">
                     {user?.name ? (

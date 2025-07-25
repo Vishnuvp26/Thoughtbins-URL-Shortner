@@ -15,3 +15,10 @@ export interface ShortenedUrlCardProps {
     copyStatus: boolean;
     handleCopy: () => void;
 }
+
+export interface TablePaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+    className?: string;
+}
