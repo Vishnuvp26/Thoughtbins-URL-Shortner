@@ -39,6 +39,12 @@ export class UserController implements IUserController {
     }
 
     async refreshAccessToken(req: Request, res: Response, next: NextFunction): Promise<void> {
-        
+        try {
+            const refreshToken = req.cookies.refreshToken;
+            const accessToken = await this._userService.refreshAccessToken(refreshToken);
+            res.status(HttpStatus.OK).json({ accessToken });
+        } catch (error) {
+            next(error)
+        }
     }
 }

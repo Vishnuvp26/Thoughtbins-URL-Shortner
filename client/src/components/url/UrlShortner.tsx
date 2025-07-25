@@ -5,6 +5,8 @@ import { Loader2 } from "lucide-react";
 import { shortenUrl } from "@/api/url.api";
 import { MESSAGES } from "@/constants/messages/message.constants";
 import ShortenedUrlCard from "./CopyUrl";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const UrlShortenerForm = () => {
     const [url, setUrl] = useState("");
@@ -13,9 +15,16 @@ const UrlShortenerForm = () => {
     const [shortUrl, setShortUrl] = useState("");
     const [copyStatus, setCopyStatus] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const { checkAuth } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!checkAuth()) {
+            toast.error(MESSAGES.LOGIN_REQUIRED)
+            return;
+        }
+
         setError(false);
         setErrorMessage("");
         setShortUrl("");

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface UserSliceType {
     _id: string;
@@ -18,17 +18,12 @@ const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setUser: (state, action) => {
-            return { ...state, ...action.payload };
+        setUser: (state, action: PayloadAction<Partial<UserSliceType>>) => {
+            Object.assign(state, action.payload);
         },
-        removeUser: () => {
-            return initialState;
-        },
-        setAccessToken: (state, action) => {
-            state.accessToken = action.payload.accessToken || null;
-        },
+        removeUser: () => initialState,
     },
 });
 
-export const { setUser, removeUser, setAccessToken } = userSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;

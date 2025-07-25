@@ -43,6 +43,7 @@ export class UrlController implements IUrlController {
             }
 
             url.clickCount += 1;
+            
             await url.save();
 
             res.redirect(url.originalUrl);
