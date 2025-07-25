@@ -21,15 +21,15 @@ A scalable and secure URL shortener built for high throughput with user-specific
 - **Database**: MongoDB
 - **Authentication**: JWT & Refresh Tokens
 - **Rate Limiting**: Token Bucket / Redis-based limiter
-- **Optional Analytics**: GeoIP, Chart.js or Recharts
+- **Optional Analytics**: Chart.js or Recharts
 
 ---
 
 ## 🧠 System Design Highlights
 
-- **Short code generation** using base62 encoding or hashids
+- **Short code generation** using nanoid
 - **TTL index on URLs** for automatic expiry after 30 days
-- **Rate limiting** using Redis' atomic counters with expiry
+- **Rate limiting**
 - **Authentication flow**:
   - Login → Get JWT + Refresh Token
   - Refresh Token API to renew access token
@@ -41,4 +41,4 @@ A scalable and secure URL shortener built for high throughput with user-specific
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/url-shortener.git
+git clone https://github.com/Vishnuvp26/Thoughtbins-URL-Shortner.git

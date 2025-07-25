@@ -10,6 +10,7 @@ import { getGeoData } from "../../utils/geo.data";
 export class UrlController implements IUrlController {
     constructor(private _urlService: IUrlService) { }
     
+    // Short the url
     async shortenUrl(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
         try {
             const { originalUrl } = req.body;
@@ -33,6 +34,7 @@ export class UrlController implements IUrlController {
         }
     };
 
+    // Redirect to original url
     async redirectUrl(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { code } = req.params;
@@ -56,6 +58,7 @@ export class UrlController implements IUrlController {
         }
     };
 
+    // Geo-distribution analytics 
     async getAnalytics(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
         try {
             const userId = req.user?.id;
@@ -69,5 +72,5 @@ export class UrlController implements IUrlController {
         } catch (error) {
             next(error);
         }
-    }
+    };
 }
