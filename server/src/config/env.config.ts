@@ -19,4 +19,7 @@ export const env = {
     get CLIENT_URL() {
         return process.env.CLIENT_URL!
     },
+    get REDIRECT_URL() {
+        return process.env.REDIRECT_URL!
+    }
 }

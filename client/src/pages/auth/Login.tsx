@@ -41,8 +41,9 @@ const Login = () => {
         setError("");
         try {
             const response = await loginUser(email, password);
+            console.log('login resss',response.user);
             dispatch(setUser({
-                _id: response.user?._id || "",
+                _id: response.user?.id || "",
                 name: response.user?.name || "",
                 email: response.user?.email || "",
                 accessToken: response.accessToken || null,

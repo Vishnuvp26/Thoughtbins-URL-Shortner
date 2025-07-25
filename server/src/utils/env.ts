@@ -16,4 +16,7 @@ export default function validateEnv() {
     if (!env.CLIENT_URL) {
         throw new Error('CLIENT_URL is not defined in env')
     }
+    if (!env.REDIRECT_URL) {
+        throw new Error('REDIRECT_URL is not defined in env')
+    }
 }
