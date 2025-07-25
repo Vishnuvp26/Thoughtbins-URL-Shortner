@@ -15,6 +15,8 @@ validateEnv();
 
 const app = express();
 
+app.set("trust proxy", true);
+
 app.use(cookieParser());
 app.use(cors(corsOption));
 app.use(express.json());

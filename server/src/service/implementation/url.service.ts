@@ -63,4 +63,30 @@ export class UrlService implements IUrlService {
     async getOriginalUrl(shortCode: string): Promise<IUrl | null> {
         return this._urlRepository.findByShortCode(shortCode);
     };
+
+    async getAnalytics(userId: string) {
+        const urls = await this._urlRepository.findByUserId(userId);
+
+        const analytics = urls.map((url) => {
+            const countryDistribution: Record<string, number> = {};
+
+            url.geoData.forEach((entry) => {
+                countryDistribution[entry.country] = (countryDistribution[entry.country] || 0) + 1;
+            });
+
+            return {
+                shortCode: url.shortCode,
+                shortUrl: `${env.REDIRECT_URL}/${url.shortCode}`,
+                originalUrl: url.originalUrl,
+                clickCount: url.clickCount,
+                countryDistribution,
+                geoData: url.geoData.map(entry => ({
+                    ip: entry.ip,
+                    country: entry.country,
+                    time: entry.time instanceof Date ? entry.time.toISOString() : entry.time
+                }))
+            };
+        });
+        return analytics;
+    };
 }
