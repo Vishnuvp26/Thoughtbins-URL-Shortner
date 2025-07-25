@@ -5,6 +5,7 @@ import { AuthRequest } from "../../middleware/auth";
 import { HttpStatus } from "../../constants/status.constants";
 import { Messages } from "../../constants/message.constants";
 import { isValidUrl } from "../../utils/validate.url";
+import { getGeoData } from "../../utils/geo.data";
 
 export class UrlController implements IUrlController {
     constructor(private _urlService: IUrlService) { }
@@ -43,6 +44,9 @@ export class UrlController implements IUrlController {
             }
 
             url.clickCount += 1;
+
+            const { ip, country } = await getGeoData(req);
+            url.geoData.push({ ip, country, time: new Date() });
             
             await url.save();
 
@@ -51,4 +55,19 @@ export class UrlController implements IUrlController {
             next(error)
         }
     };
+
+    async getAnalytics(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const userId = req.user?.id;
+            if (!userId) {
+                res.status(HttpStatus.BAD_REQUEST).json({ message: Messages.INVALID_ID });
+                return;
+            }
+
+            const data = await this._urlService.getAnalytics(userId);
+            res.status(HttpStatus.OK).json(data);
+        } catch (error) {
+            next(error);
+        }
+    }
 }

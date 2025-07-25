@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/navbar/Navbar";
 import UrlShortenerForm from "@/components/url/UrlShortner";
 import { navItems } from "@/constants/items/NavItems";
+import GeoData from "@/components/geodata/GeoData";
+import { useAuth } from "@/hooks/useAuth";
 
 const LandingPage = () => {
+    const { isAuthenticated } = useAuth();
     return (
         <div className="relative min-h-screen w-full">
             <Navbar title="URL Shortener" navItems={navItems} />
@@ -12,7 +15,7 @@ const LandingPage = () => {
                     initial={{ opacity: 0, y: 40, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="relative z-10 flex flex-col items-center justify-start h-full px-4 pt-32 text-center"
+                    className="relative z-10 flex flex-col items-center justify-start h-full px-4 pt-16 sm:pt-24 md:pt-32 text-center"
                 >
                     <h1 className="mt-6 max-w-[15ch] text-4xl sm:text-5xl lg:text-[2.75rem] xl:text-5xl font-black leading-[1.1] tracking-tighter">
                         Smart links, better results!
@@ -21,6 +24,7 @@ const LandingPage = () => {
                         Create short, memorable links that drive more clicks and simplify your sharing.
                     </p>
                     <UrlShortenerForm />
+                    {isAuthenticated && <GeoData />}
                 </motion.div>
             </div>
         </div>

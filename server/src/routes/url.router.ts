@@ -10,7 +10,7 @@ const router = Router();
 const urlRepository = new UrlRepository();
 const userUsageRepository = new UsageRepository();
 const urlService = new UrlService(urlRepository, userUsageRepository);
-const urlController = new UrlController(urlService)
+const urlController = new UrlController(urlService);
 
 router.post(
     '/short-url',
@@ -18,4 +18,10 @@ router.post(
     urlController.shortenUrl.bind(urlController)
 );
 
-export default router
+router.get(
+    '/analytics',
+    authenticateToken,
+    urlController.getAnalytics.bind(urlController)
+);
+
+export default router;

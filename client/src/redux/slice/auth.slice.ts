@@ -21,7 +21,9 @@ const userSlice = createSlice({
         setUser: (state, action: PayloadAction<Partial<UserSliceType>>) => {
             Object.assign(state, action.payload);
         },
-        removeUser: () => initialState,
+        removeUser: () => ({
+            ...initialState,
+        }),
     },
 });
 
