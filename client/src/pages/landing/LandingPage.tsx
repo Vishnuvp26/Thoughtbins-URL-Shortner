@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/navbar/Navbar";
-import UrlShortenerForm from "@/components/shortner/UrlShortner";
+import UrlShortenerForm from "@/components/url/UrlShortner";
 import { navItems } from "@/constants/items/NavItems";
 
 const LandingPage = () => {

@@ -22,4 +22,9 @@ router.post(
     userController.login.bind(userController)
 );
 
+router.post(
+    '/refresh-token',
+    userController.refreshAccessToken.bind(userController)
+);
+
 export default router;

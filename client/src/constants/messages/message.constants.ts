@@ -25,5 +25,6 @@ export const VALIDATION_MESSAGES = {
 export const MESSAGES = {
     SOMETHING_WRONG: "Something went wrong, please try again",
     ACCOUNT_CREATED: "Your account has been created, please login",
-    URL_REQUIRED: "Please enter a URL"
+    URL_REQUIRED: "Please enter a URL",
+    LOGIN_REQUIRED: "Please login to continue"
 }
