@@ -9,3 +9,9 @@ export interface FormData {
     password: string
     confirmPassword: string
 }
+
+export interface ShortenedUrlCardProps {
+    shortUrl: string;
+    copyStatus: boolean;
+    handleCopy: () => void;
+}
