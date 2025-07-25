@@ -1,3 +1,4 @@
+// sonner.tsx
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"
 import type { ToasterProps } from "sonner"
@@ -7,7 +8,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={theme as "light" | "dark" | "system"}
       className="toaster group"
       style={
         {

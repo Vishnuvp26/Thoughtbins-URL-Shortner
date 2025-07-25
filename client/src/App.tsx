@@ -8,7 +8,7 @@ const AuthRoutes = React.lazy(() => import('@/routes/AuthRoutes'));
 const App = () => {
     return (
         <>
-            <Toaster />
+            <Toaster theme="system"/>
             <Router>
                 <Suspense fallback={<BarLoader />}>
                     <Routes>
