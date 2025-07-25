@@ -6,6 +6,7 @@ import { HttpStatus } from "../../constants/status.constants";
 export class UserController implements IUserController {
     constructor(private _userService: IUserService) { }
     
+    // Register
     async register(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { name, email, password } = req.body;
@@ -14,8 +15,9 @@ export class UserController implements IUserController {
         } catch (error) {
             next(error)
         }
-    }
+    };
 
+    // Login
     async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { email, password } = req.body
@@ -24,7 +26,7 @@ export class UserController implements IUserController {
             res.cookie("refreshToken", response.refreshToken, {
                 httpOnly: true,
                 secure: true,
-                sameSite: "strict",
+                sameSite: "none",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             });
 
@@ -36,8 +38,9 @@ export class UserController implements IUserController {
         } catch (error) {
             next(error)
         }
-    }
+    };
 
+    // Refresh token
     async refreshAccessToken(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const refreshToken = req.cookies.refreshToken;
@@ -46,5 +49,5 @@ export class UserController implements IUserController {
         } catch (error) {
             next(error)
         }
-    }
+    };
 }
