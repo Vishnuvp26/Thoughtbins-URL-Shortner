@@ -53,11 +53,8 @@ const GeoData = () => {
                 }
             });
         });
-        console.log('COUNTRYDATA :',countryData);
         return countryData;
     };
-
-
 
     const prepareClickData = () => {
         return analytics.map(item => ({
