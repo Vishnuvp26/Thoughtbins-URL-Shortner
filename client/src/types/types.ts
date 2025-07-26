@@ -22,3 +22,12 @@ export interface TablePaginationProps {
     onPageChange: (page: number) => void;
     className?: string;
 }
+
+export interface Analytics {
+    shortCode: string;
+    shortUrl: string;
+    originalUrl: string;
+    clickCount: number;
+    countryDistribution: Record<string, number>;
+    geoData: Array<{ ip: string; country: string; time: string }>;
+}

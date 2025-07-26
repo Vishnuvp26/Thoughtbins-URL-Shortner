@@ -7,6 +7,8 @@ import { MESSAGES } from "@/constants/messages/message.constants";
 import ShortenedUrlCard from "./CopyUrl";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { setShortCode } from "@/redux/slice/url.slice";
 
 const UrlShortenerForm = () => {
     const [url, setUrl] = useState("");
@@ -16,6 +18,7 @@ const UrlShortenerForm = () => {
     const [copyStatus, setCopyStatus] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const { checkAuth } = useAuth();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,6 +40,9 @@ const UrlShortenerForm = () => {
         try {
             setLoading(true);
             const response = await shortenUrl({ originalUrl: url.trim() });
+            const shortCode = response.shortUrl.split("/").pop();
+            console.log('shortCode from form :', shortCode);
+            dispatch(setShortCode(shortCode));
             setShortUrl(response.shortUrl);
         } catch (err: any) {
             setError(true);

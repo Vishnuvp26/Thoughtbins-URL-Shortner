@@ -16,6 +16,16 @@ export class UrlService implements IUrlService {
     ) {}
 
     async shortenUrl(originalUrl: string, userId: string): Promise<IUrl> {
+        const existing = await this._urlRepository.findByOriginalUrlAndUser(originalUrl, userId);
+        if (existing) {
+            const shortBase = env.REDIRECT_URL;
+            const shortUrl = `${shortBase}/${existing.shortCode}`;
+            return {
+                ...existing.toObject(),
+                shortUrl,
+            };
+        }
+
         let usage = await this._userUsageRepository.findByUserId(userId);
         const today = new Date().toDateString();
 

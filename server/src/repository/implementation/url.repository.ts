@@ -14,4 +14,9 @@ export class UrlRepository extends BaseRepository<IUrl> implements IUrlRepositor
     async findByUserId(userId: string) {
         return this.find({ userId });
     };
+
+    async findByOriginalUrlAndUser(originalUrl: string, userId: string) {
+        return this.findOne({ originalUrl, userId });
+    };
+
 }
