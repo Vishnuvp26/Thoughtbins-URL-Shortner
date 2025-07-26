@@ -24,7 +24,7 @@ const LandingPage = () => {
                         Create short, memorable links that drive more clicks and simplify your sharing.
                     </p>
                     <UrlShortenerForm />
-                    {isAuthenticated && <GeoData />}
+                    {isAuthenticated && <GeoData/>}
                 </motion.div>
             </div>
         </div>

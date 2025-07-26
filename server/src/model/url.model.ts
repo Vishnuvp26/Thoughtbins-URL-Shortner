@@ -53,6 +53,7 @@ const urlSchema = new Schema<IUrl>({
 });
 
 urlSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+urlSchema.index({ userId: 1, originalUrl: 1 });
 
 export const Url = mongoose.model<IUrl>('Url', urlSchema);
 export default Url;

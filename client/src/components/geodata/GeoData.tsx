@@ -1,38 +1,16 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { getAnalytics } from "@/api/url.api";
-import { Loader2 } from "lucide-react";
-import {
-    BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-    PieChart, Pie, Cell, Legend, CartesianGrid, Label
-} from "recharts";
 import TablePagination from "../pagination/Pagination";
-
-interface Analytics {
-    shortCode: string;
-    shortUrl: string;
-    originalUrl: string;
-    clickCount: number;
-    countryDistribution: Record<string, number>;
-    geoData: Array<{ ip: string; country: string; time: string }>;
-}
+import { CustomTooltip } from "../tooltip/Tooltip";
+import { MESSAGES } from "@/constants/messages/message.constants";
+import type { Analytics } from "@/types/types";
+import {BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,PieChart, Pie, Cell, Legend, CartesianGrid, Label} from "recharts";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store/store";
+import AnalyticsSkeleton from "./Skeleton";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
-
-const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-        return (
-            <div className=" p-4 rounded-lg shadow-lg border">
-                <p className="font-semibold">{label}</p>
-                <p className="text-[#8884d8]">
-                    Clicks: {payload[0].value}
-                </p>
-            </div>
-        );
-    }
-    return null;
-};
-
 const ITEMS_PER_PAGE = 5;
 
 const GeoData = () => {
@@ -40,21 +18,29 @@ const GeoData = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const shortCode = useSelector((state: RootState) => state.shortCode.value);
+    console.log('shortCode use selector :', shortCode);
 
     useEffect(() => {
+        if (!shortCode) {
+            setLoading(false);
+            return;
+        }
         fetchAnalytics();
-    }, []);
+    }, [shortCode]);
 
     const fetchAnalytics = async () => {
         try {
             const data = await getAnalytics();
             setAnalytics(data);
         } catch (err: any) {
-            setError(err.message || "Failed to fetch analytics");
+            setError(err.message || MESSAGES.ANALYTICS_FAILED);
         } finally {
             setLoading(false);
         }
     };
+
+    if (!loading && analytics.length === 0) return
 
     const prepareCountryData = () => {
         const countryData: { name: string; value: number }[] = [];
@@ -111,11 +97,7 @@ const GeoData = () => {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center h-[400px]">
-                <Loader2 className="w-8 h-8 animate-spin" />
-            </div>
-        );
+        return <AnalyticsSkeleton />;
     }
 
     if (error) {
@@ -249,4 +231,4 @@ const GeoData = () => {
     );
 };
 
-export default GeoData;
+export default GeoData; 
