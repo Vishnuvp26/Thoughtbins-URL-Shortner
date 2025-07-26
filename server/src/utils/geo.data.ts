@@ -6,11 +6,14 @@ export interface GeoData {
 }
 
 export const getGeoData = async (req: any): Promise<GeoData> => {
-    const rawIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
-    let ip = Array.isArray(rawIp) ? rawIp[0] : rawIp.toString().split(",")[0].trim();
+    let ip = req.ip || "";
 
-    if (ip === "::1" || ip === "127.0.0.1") {
+    if (ip === "::1" || ip === "127.0.0.1" || ip.includes("::ffff:127.0.0.1")) {
         ip = "8.8.8.8";
+    }
+
+    if (ip.includes("::ffff:")) {
+        ip = ip.split("::ffff:")[1];
     }
 
     try {
