@@ -19,7 +19,6 @@ const GeoData = () => {
     const [error, setError] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const shortCode = useSelector((state: RootState) => state.shortCode.value);
-    console.log('shortCode use selector :', shortCode);
 
     useEffect(() => {
         if (!shortCode) {
@@ -54,8 +53,11 @@ const GeoData = () => {
                 }
             });
         });
+        console.log('COUNTRYDATA :',countryData);
         return countryData;
     };
+
+
 
     const prepareClickData = () => {
         return analytics.map(item => ({
