@@ -6,7 +6,7 @@ export const VALIDATION_MESSAGES = {
     },
     EMAIL: {
         REQUIRED: "Email is required",
-        INVALID: "Invalid email format"
+        INVALID: "Invalid email formats"
     },
     PASSWORD: {
         REQUIRED: "Password is required",
