@@ -18,7 +18,7 @@ export const VALIDATION_MESSAGES = {
     },
     CONFIRM_PASSWORD: {
         REQUIRED: "Confirm Password is required",
-        MISMATCH: "Passwords do not match"
+        MISMATCH: "Passwords do not match try again"
     }
 }
 
